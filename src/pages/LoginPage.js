@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect }  from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch }  from 'react-redux';
 
 import authOperations from '../redux/auth/auth-operations';
 
@@ -10,66 +10,53 @@ import Container from '../components/Container';
 
 const {login} = authOperations;
 
+export default function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
-class LoginPage extends Component {
-    state = {
-        email: '',
-        password: '',
-    };
-
-    handleChange = ({target: {name, value}}) => {
-        this.setState({[name]: value})
+    const updateEmail = e => {
+        setEmail(e.target.value);
+      };
+    
+      const updatePassword = e => {
+        setPassword(e.target.value);
       };
 
-    handleSubmit = (e) => {
+      const handleSubmit = e => {
         e.preventDefault();
+        dispatch(login({email, password}), [dispatch, email, password])
+      };
 
-        this.props.onLogin(this.state);
+    return (
+        <Container title="Authorization page">
+            <form
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                >
+                <label className={s.label}>
+                    <div className={s.head__field}>E-mail</div>
+                    <input
+                        className={s.input} 
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={updateEmail}
+                    />
+                </label>
 
-        this.setState({name: '', email: '', password: ''})
-    };
-
-    render() {
-        const {email, password} = this.state;
-
-        return (
-            <Container title="Authorization page">
-                <form
-                    autoComplete="off"
-                    onSubmit={this.handleSubmit}
-                    >
-                    <label className={s.label}>
-                        <div className={s.head__field}>E-mail</div>
-                        <input
-                            className={s.input} 
-                            type="email"
-                            name="email"
-                            value={email}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-
-                    <label>
-                        <div className={s.head__field}>Pass</div>
-                        <input
-                            className={s.input} 
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={this.handleChange}
-                        />
-                    </label>
-                    <Button type="submit">Enter</Button>
-                </form>
-            </Container>
-        );
-    }
- }
-
-
- const mapDispatchToProps = dispatch => ({
-     onLogin: (credentials) => dispatch(login(credentials)),
- });
-
- 
-export default connect(null, mapDispatchToProps)(LoginPage);
+                <label>
+                    <div className={s.head__field}>Pass</div>
+                    <input
+                        className={s.input} 
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={updatePassword}
+                    />
+                </label>
+                <Button type="submit">Enter</Button>
+            </form>
+        </Container>
+    ) 
+};

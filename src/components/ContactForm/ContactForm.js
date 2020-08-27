@@ -50,7 +50,6 @@ export default function ContactForm() {
             return;
         };
 
-        
         dispatch(addContact({ name, number }));
         setName('');
         setNumber('');
