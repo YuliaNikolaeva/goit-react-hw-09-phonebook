@@ -1,0 +1,18 @@
+.contactBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e5e4e6;
+
+    padding: 8px 0;
+    margin-bottom: 3px;
+}
+
+.contactBox div {
+    width: 33%;
+    text-align: center;
+}
+
+.contactBox:not(:last-child) {
+    margin-bottom: 7px;
+}

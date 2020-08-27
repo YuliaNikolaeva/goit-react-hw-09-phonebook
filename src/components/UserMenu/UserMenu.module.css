@@ -1,0 +1,30 @@
+.welcomeBox {
+    font-size: 1.1em;
+    color: #656566;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.welcomeText {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.welcomeName {
+    display: inline-block;
+    font-weight: 600;
+}
+
+.btnLogout {
+    padding: 3px 12px;
+    display: inline-block;
+    border: none;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.btnLogout:hover{
+    background-color: #39393a;
+    color: #ffffff;
+
+}
