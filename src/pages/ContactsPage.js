@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 
 
@@ -15,51 +15,36 @@ const {fetchContacts} = contactOperations;
 
 const {getContacts, getLoading} = contactSelectors;
 
+export default function ContactsPage () {
+    const dispatch = useDispatch();
+    const contacts = useSelector(getContacts);
+    const isLoadingContacts = useSelector(getLoading);
 
-class App extends Component {
+    useEffect(() => {
+        dispatch(fetchContacts())
+    }, [dispatch]);
 
-    componentDidMount() {
-        this.props.getAllContacts();
-    };
 
-    render() {
-        const { contacts, isLoadingContacts } = this.props;
-
-        return (
-            <>
-                <Container title={'Phonebook'}>
-                    {contacts.length > 1 && <Filter />}
-                    <ContactForm />
-                </Container>
-                <Container title={'Contacts'}>
-                    {this.props.isLoadingContacts && <Loader
-                        type="Puff"
-                        color="#666464"
-                        height={60}
-                        width={60}
-                    />}
-                    {contacts.length > 0 ? (
-                        <ContactsList />
-                    ) : (
-                        !isLoadingContacts &&
-                        <Message text={'Phonebook is empty'} />
-                    )}
-                </Container>
-            </>
-        );
-    }
-}
-
-const mapDispatchToProps = dispatch => ({
-    getAllContacts: () => dispatch(fetchContacts()),
-})
-
-const mapStateToProps = state => {
-    return {
-        contacts: getContacts(state),
-        isLoadingContacts: getLoading(state),
-    };
+    return(
+        <>
+            <Container title={'Phonebook'}>
+                {contacts.length > 1 && <Filter />}
+                <ContactForm />
+            </Container>
+            <Container title={'Contacts'}>
+                {isLoadingContacts && <Loader
+                    type="Puff"
+                    color="#666464"
+                    height={60}
+                    width={60}
+                />}
+                {contacts.length > 0 ? (
+                    <ContactsList />
+                ) : (
+                    !isLoadingContacts &&
+                    <Message text={'Phonebook is empty'} />
+                )}
+            </Container>
+        </>
+    );
 };
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

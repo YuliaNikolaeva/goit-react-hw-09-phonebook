@@ -7,7 +7,7 @@ import s from './Navigation.module.css';
 
 const {getIsAuthenticated} = authSelectors;
 
-export default function Navigation ({isAuthenticated}) {
+export default function Navigation () {
     const isUserLogin = useSelector(getIsAuthenticated);
 
     return (
@@ -31,32 +31,3 @@ export default function Navigation ({isAuthenticated}) {
         </nav>
     );
 };
-
-
-
-// const Navigation = ({isAuthenticated}) => (
-//     <nav className={s.mainNavBox}>
-//         <NavLink 
-//             to="/"
-//             exact
-//             activeStyle={{color:"#656566"}} 
-//             className={s.mainNav}
-//         >Home
-//         </NavLink>
-
-//         {isAuthenticated && 
-//             <NavLink 
-//                 to="/contacts"
-//                 activeStyle={{color:"#656566"}} 
-//                 className={s.mainNav}
-//             >Contacts
-//             </NavLink>
-//         }
-//     </nav>
-// );
-
-// const mapStateToProps = (state) => ({
-//     isAuthenticated: getIsAuthenticated(state),
-// });
-
-// export default connect(mapStateToProps)(Navigation);

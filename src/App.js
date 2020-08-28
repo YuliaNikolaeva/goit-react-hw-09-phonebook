@@ -1,6 +1,6 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
@@ -32,58 +32,51 @@ const LoginPage = lazy( () =>
 
 const {getCurrentUser} = authOperations;
 
-class App extends Component {
+export default function App() {
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        this.props.getUser();
-    }
+    useEffect(() => {
+        dispatch(getCurrentUser())
+    }, [dispatch]);
 
-    render() {
-        return (
-            <ContainerGeneralForPage>
-                <AppBar />
-                <Suspense 
-                    fallback={
-                        <Loader
-                            type="Puff"
-                            color="#666464"
-                            height={60}
-                            width={60}
-                        />
-                    }
-                >
-                    <Switch>
-                        <PublicRoute 
-                            exact 
-                            path="/" 
-                            component={HomePage} 
-                        />
-                        <PublicRoute 
-                            path="/register" 
-                            component={RegisterPage}
-                            restricted
-                            redirectTo="/contacts"
-                        />
-                        <PublicRoute 
-                            path="/login" 
-                            component={LoginPage}
-                            restricted
-                            redirectTo="/contacts"
-                        />
-                        <PrivateRoute 
-                            path="/contacts" 
-                            component={ContactsPage}
-                            redirectTo="/login"
-                        />
-                    </Switch>
-                </Suspense>
-            </ContainerGeneralForPage>
-        );
-    }
-}
-
-const mapDispatchToProps = dispatch => ({
-    getUser: () => dispatch(getCurrentUser()),
-});
-
-export default connect(null, mapDispatchToProps)(App);
+    return (
+        <ContainerGeneralForPage>
+            <AppBar />
+            <Suspense 
+                fallback={
+                    <Loader
+                        type="Puff"
+                        color="#666464"
+                        height={60}
+                        width={60}
+                    />
+                }
+            >
+                <Switch>
+                    <PublicRoute 
+                        exact 
+                        path="/" 
+                        component={HomePage} 
+                    />
+                    <PublicRoute 
+                        path="/register" 
+                        component={RegisterPage}
+                        restricted
+                        redirectTo="/contacts"
+                    />
+                    <PublicRoute 
+                        path="/login" 
+                        component={LoginPage}
+                        restricted
+                        redirectTo="/contacts"
+                    />
+                    <PrivateRoute 
+                        path="/contacts" 
+                        component={ContactsPage}
+                        redirectTo="/login"
+                    />
+                </Switch>
+            </Suspense>
+        </ContainerGeneralForPage>
+    );
+};
