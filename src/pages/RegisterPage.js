@@ -6,6 +6,7 @@ import authSelectors from '../redux/auth/auth-selectors';
 import { Button } from 'react-bootstrap';
 import s from './RegisterPage.module.css';
 import Container from '../components/Container';
+import MessageError from '../components/MessageError';
 
 const {register} = authOperations;
 const {errorInAuth} = authSelectors;
@@ -43,6 +44,7 @@ export default function RegisterPage() {
 
   return (
     <Container title="Registration page">
+      {errInAuth &&  <MessageError text={'Error in registration connect'} />}
       <form
           autoComplete="off"
           onSubmit={handleSubmit}

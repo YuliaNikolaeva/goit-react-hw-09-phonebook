@@ -7,6 +7,7 @@ import authSelectors from '../redux/auth/auth-selectors';
 import { Button } from 'react-bootstrap';
 import s from './LoginPage.module.css';
 import Container from '../components/Container';
+import MessageError from '../components/MessageError';
 
 
 const {login} = authOperations;
@@ -33,7 +34,7 @@ export default function LoginPage() {
 
     return (
         <Container title="Authorization page">
-            {errInAuth && alert('Error in Login or Password')}
+            {errInAuth && <MessageError text={'Error in Login or Password'}/>}
             <form
                 autoComplete="off"
                 onSubmit={handleSubmit}

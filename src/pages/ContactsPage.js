@@ -8,6 +8,7 @@ import Container from '../components/Container';
 import ContactsList from '../components/ContactsList';
 import Filter from '../components/Filter';
 import Message from '../components/Message';
+import MessageError from '../components/MessageError';
 
 import {contactOperations, contactSelectors} from '../redux/contacts';
 
@@ -29,28 +30,31 @@ export default function ContactsPage () {
         dispatch(fetchContacts())
     }, [dispatch]);
 
-
     return(
         <>
             <Container title={'Phonebook'}>
                 {contacts.length > 1 && <Filter />}
-                <ContactForm />
             </Container>
-            <Container title={'Contacts'}>
-                {isLoadingContacts && <Loader
-                    type="Puff"
-                    color="#666464"
-                    height={60}
-                    width={60}
-                />}
-                {errInContacts && alert('Error in connect to contact list')}
-                {contacts.length > 0 ? (
-                    <ContactsList />
-                ) : (
-                    !isLoadingContacts &&
-                    <Message text={'Phonebook is empty'} />
-                )}
-            </Container>
+
+            {errInContacts
+            ? <MessageError text={'Error in connect to contact list'} />
+            :   <>
+                    <ContactForm />
+                    <Container title={'Contacts'}>
+                        {isLoadingContacts && <Loader
+                            type="Puff"
+                            color="#666464"
+                            height={60}
+                            width={60}
+                        />}
+                        {contacts.length > 0 ? (
+                            <ContactsList />
+                        ) : (
+                            !isLoadingContacts && <Message text={'Phonebook is empty'} />
+                        )}
+                    </Container>
+                </>
+            }
         </>
     );
 };
