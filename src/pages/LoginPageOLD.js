@@ -63,5 +63,5 @@ export default function LoginPage() {
                 <Button type="submit">Enter</Button>
             </form>
         </Container>
-    ) 
+    );
 };
