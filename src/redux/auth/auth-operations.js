@@ -32,7 +32,7 @@ const token = {
     dispatch(registerRequest());
 
     axios
-    .post('/users/signup111', credentials)
+    .post('/users/signup', credentials)
     .then(response => dispatch (registerSuccess(response.data), token.set(response.data.token)))
     .catch(err => dispatch(registerError(err.message)));
   };

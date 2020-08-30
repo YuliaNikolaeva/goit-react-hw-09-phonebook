@@ -18,25 +18,30 @@ const {errorInAuth} = authSelectors;
 export default function RegisterPage() {
 
   const dispatch = useDispatch();
+
   const errInAuth = useSelector(errorInAuth);
 
   const schema = yup.object().shape({
     name: yup.string()
       .typeError('Incorrect type value')
+      .min(1)
+      .max(30, 'Name is very long')
       .required('Field name is required'),
     email: yup.string()
       .typeError('Incorrect type value')
+      .min(1)
+      .max(30, 'Email is very long')
       .required('Field email is required'),
     password: yup.string()
-      .min(7, 'Field password must be min 8 characters')
+      .min(7, 'Field password must be min 7 characters')
+      .max(30, 'Password is very long')
       .required('Field password is required'),
-  })
+  });
 
     const handleSubmit = useCallback((values) => {
       dispatch(register(values));
     },[dispatch]
   );
-
 
   return (
     <Container title="Registration page">
@@ -49,7 +54,10 @@ export default function RegisterPage() {
           password: '',
         }}
         validateOnBlur
-        onSubmit={(values, {resetForm}) => {handleSubmit(values); resetForm() }}
+        onSubmit={(values, { resetForm }) => {
+          handleSubmit(values); 
+          resetForm();
+        }}
         validationSchema={schema}
       >
         {({
@@ -108,8 +116,8 @@ export default function RegisterPage() {
                   onChange={handleChange}
                 >
                 </input>
+                {errors.name && <MessageFieldError text={errors.password} />}
               </label>
-              {errors.name && <MessageFieldError text={errors.password} />}
               <Button 
                 type="submit"
                 disabled={!isValid || !dirty}
