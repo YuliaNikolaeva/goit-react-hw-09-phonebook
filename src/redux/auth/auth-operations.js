@@ -32,11 +32,10 @@ const token = {
     dispatch(registerRequest());
 
     axios
-    .post('/users/signup', credentials)
+    .post('/users/signup111', credentials)
     .then(response => dispatch (registerSuccess(response.data), token.set(response.data.token)))
     .catch(err => dispatch(registerError(err.message)));
   };
-
 
   const login = credentials => dispatch => {
     dispatch(loginRequest());
