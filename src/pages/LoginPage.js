@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch }  from 'react-redux';
+import {useSelector, useDispatch }  from 'react-redux';
 
 import authOperations from '../redux/auth/auth-operations';
+import authSelectors from '../redux/auth/auth-selectors';
 
 import { Button } from 'react-bootstrap';
 import s from './LoginPage.module.css';
@@ -9,11 +10,13 @@ import Container from '../components/Container';
 
 
 const {login} = authOperations;
+const {errorInAuth} = authSelectors;
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const errInAuth = useSelector(errorInAuth);
 
     const updateEmail = e => {
         setEmail(e.target.value);
@@ -30,6 +33,7 @@ export default function LoginPage() {
 
     return (
         <Container title="Authorization page">
+            {errInAuth && alert('Error in Login or Password')}
             <form
                 autoComplete="off"
                 onSubmit={handleSubmit}

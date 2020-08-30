@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import authOperations from '../redux/auth/auth-operations';
+import authSelectors from '../redux/auth/auth-selectors';
 
 import { Button } from 'react-bootstrap';
 import s from './RegisterPage.module.css';
 import Container from '../components/Container';
 
 const {register} = authOperations;
+const {errorInAuth} = authSelectors;
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -14,6 +16,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const errInAuth = useSelector(errorInAuth);
 
   const updateName = e => {
     setName(e.target.value);

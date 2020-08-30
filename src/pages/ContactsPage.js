@@ -13,12 +13,17 @@ import {contactOperations, contactSelectors} from '../redux/contacts';
 
 const {fetchContacts} = contactOperations;
 
-const {getContacts, getLoading} = contactSelectors;
+const {
+        getContacts, 
+        getLoading,
+        errorInContacts,
+    } = contactSelectors;
 
 export default function ContactsPage () {
     const dispatch = useDispatch();
     const contacts = useSelector(getContacts);
     const isLoadingContacts = useSelector(getLoading);
+    const errInContacts = useSelector(errorInContacts);
 
     useEffect(() => {
         dispatch(fetchContacts())
@@ -38,6 +43,7 @@ export default function ContactsPage () {
                     height={60}
                     width={60}
                 />}
+                {errInContacts && alert('Error in connect to contact list')}
                 {contacts.length > 0 ? (
                     <ContactsList />
                 ) : (
