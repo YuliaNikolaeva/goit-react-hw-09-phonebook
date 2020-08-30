@@ -30,7 +30,7 @@ export default function LoginPage() {
       password: yup.string()
         .min(1)
         .required('Field password is required'),
-    })
+    });
 
     const handleSubmit = useCallback((values) => {
         dispatch(login(values))
@@ -100,5 +100,5 @@ export default function LoginPage() {
                 )}
             </Formik>
         </Container>
-    ) 
+    );
 };

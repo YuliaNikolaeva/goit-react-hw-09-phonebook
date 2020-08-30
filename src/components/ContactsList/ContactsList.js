@@ -15,7 +15,7 @@ export default function ContactsList () {
     const contacts = useSelector(getVisibleContacts);
     const onClickBtn = useCallback((id) => {
         dispatch(deleteContact(id))
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <ul>

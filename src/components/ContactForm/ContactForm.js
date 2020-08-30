@@ -88,7 +88,7 @@ export default function ContactForm() {
                 Add contact
             </Button>
         </form>
-    )
+    );
 };
 
 ContactForm.propTypes = {
